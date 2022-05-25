@@ -1,0 +1,22 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root
+{
+    --mainGray: #35363A;
+}
+
+body, html{
+    overflow-x: hidden;
+}
+
+#root
+{
+    background: var(--mainGray);
+    height: 100vh;
+    width: 100vw;
+}
