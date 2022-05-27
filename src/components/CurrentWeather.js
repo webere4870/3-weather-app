@@ -1,10 +1,11 @@
 import React from 'react'
 
-function CurrentWeather()
+function CurrentWeather(props)
 {
+    console.log(props)
     return(
         <div>
-            <h1>CurrentWeather</h1>
+            <h1>{props.conditions}</h1>
         </div>
     )
 }

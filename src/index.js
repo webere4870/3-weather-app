@@ -7,7 +7,7 @@ function App()
 {
   let [weatherData, setWeatherData] = React.useState([])
   let [location, setLocation] = React.useState([])
-  let [cardState, setCardState] = React.useState([])
+  let [activeData, setActiveData] = React.useState({})
 
   React.useEffect(()=>
   {
@@ -27,18 +27,27 @@ function App()
         }
         return stripped
       })
+      setActiveData((prev)=>
+      {
+        let current = data.days[0]
+        current.front = true
+        current.id = 0
+        return current
+      })
     })
   }, [location])
 
   function changeCard(id)
   {
-    setCardState((arr)=>
+    console.log(id)
+    setWeatherData((arr)=>
     {
       let newArray = []
       for(let counter = 0; counter < arr.length; counter++)
       {
         if(arr[counter].id === id)
         {
+          
           arr[counter].front = !arr[counter].front
           newArray.push(arr[counter])
         }
@@ -52,16 +61,32 @@ function App()
     
   }
 
-  let mappedWeatherData = []
-  for(let counter = 0; counter < 5; counter++)
+  function newActiveData(id)
   {
-    mappedWeatherData.push(<WeatherCard key={counter} {...weatherData[counter]}toggle={()=>changeCard(weatherData[counter].id)}/>)
+    setActiveData((prev)=>
+    {
+      let returnObj;
+      for(let temp of weatherData)
+      {
+        if(id === temp.id)
+        {
+          returnObj = temp
+        }
+      }
+      return returnObj
+    })
+  }
+
+  let mappedWeatherData = []
+  for(let counter = 1; counter < 6; counter++)
+  {
+    mappedWeatherData.push(<WeatherCard key={counter} {...weatherData[counter]}toggle={()=>changeCard(weatherData[counter].id)} changeCurrent={()=>newActiveData(weatherData[counter].id)}/>)
   }
 
 
   return (
     <div className='colFlex'>
-      <CurrentWeather/>
+      <CurrentWeather {...activeData} />
       <div id='cardRow'>
         {mappedWeatherData}
       </div>

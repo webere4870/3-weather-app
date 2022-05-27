@@ -31,7 +31,7 @@ function WeatherCard(props)
             <h1>{returnDay(props.datetime)}</h1>
     </div>)
     return (
-        <div className='weatherCard' onClick={props.toggle}>
+        <div className='weatherCard' onClick={props.changeCurrent} >
             {props.front == true ? temp : null}
         </div>
     )
