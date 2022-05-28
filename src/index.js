@@ -1,118 +1,141 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import CurrentWeather from './components/CurrentWeather'
-import WeatherCard from './components/WeatherCard'
+
+function returnDay(dateTime)
+{
+    let date = new Date(dateTime)
+    let day = date.getDay()
+    switch(day)
+    {
+        case 0: return "Monday"
+        case 1: return "Tuesday"
+        case 2: return "Wednesday"
+        case 3: return "Thursday"
+        case 4: return "Friday"
+        case 5: return "Saturday"
+        case 6: return "Sunday"    
+    } 
+}
 
 function App()
 {
-  let [weatherData, setWeatherData] = React.useState([])
+  let [weatherData, setWeatherData] = React.useState()
   let [location, setLocation] = React.useState([])
   let [activeData, setActiveData] = React.useState({})
 
   let backgroundStyling = 
   {}
 
-  if(activeData.conditions)
+ React.useEffect(()=>
+ {
+  if(weatherData)
   {
-    if(activeData.conditions.includes("Sun") || activeData.conditions.includes("sun"))
-    {
-      backgroundStyling.background = "url('./images/sun.jpg')"
-    }
-    else if(activeData.conditions.includes("rain") || activeData.conditions.includes("Rain"))
-    {
-      backgroundStyling.background = "url('./images/rain.jpg')"
-    }
-    else if(activeData.conditions.includes("Cloud")|| activeData.conditions.includes("cloud"))
-    {
-      backgroundStyling.background = "url('./images/sun.jpg')"
-      backgroundStyling.backgroundRepeat = 'no-repeat'
-      backgroundStyling.backgroundSize = 'cover'
-      backgroundStyling.backgroundPosition = 'center'
-    }
-    else{
-      backgroundStyling.background = "url('./images/rain.jpg')"
-    }
+    setActiveData(weatherData[0])
   }
+ },[weatherData])
 
   React.useEffect(()=>
   {
     fetch("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Findlay%2C%20OH?unitGroup=metric&key=HT984Q2C3RH6ZBESHCUGTV3N5&contentType=json")
     .then((data)=> data.json())
-    .then((data)=>
+    //err
+    .catch((datar)=>
     {
+      let data = {location: "findlay", days: [{datetime: '2022-05-28'},{datetime: '2022-05-29'}, {datetime: '2022-05-30'}]}
+      console.log(data)
+      let finalArray = []
       setWeatherData((prev)=>
       {
-        let stripped = data.days
-        let count = 0
-        for(let temp of stripped)
+        for(let counter = 0; counter < data.days.length; counter++)
         {
-          temp.front = true
-          temp.id = count
-          count++
+          data.days[counter].id = counter
+          finalArray.push(data.days[counter])
         }
-        return stripped
+        console.log(finalArray)
+        return finalArray
       })
-      setActiveData((prev)=>
-      {
-        let current = data.days[0]
-        current.front = true
-        current.id = 0
-        return current
-      })
+      // setActiveData((prev)=>
+      // {
+      //   let current = weatherData[0]
+      //   console.log("Current", current)
+      //   return current
+      // })
     })
-  }, [location])
-
-  function changeCard(id)
-  {
-    setWeatherData((arr)=>
-    {
-      let newArray = []
-      for(let counter = 0; counter < arr.length; counter++)
-      {
-        if(arr[counter].id === id)
-        {
+  }, [])
+  // function changeCard(id)
+  // {
+  //   setWeatherData((arr)=>
+  //   {
+  //     let newArray = []
+  //     for(let counter = 0; counter < arr.length; counter++)
+  //     {
+  //       if(arr[counter].id === id)
+  //       {
           
-          arr[counter].front = !arr[counter].front
-          newArray.push(arr[counter])
-        }
-        else
-        {
-          newArray.push(arr[counter])
-        }
-      }
-      return newArray
-    })
+  //         arr[counter].front = !arr[counter].front
+  //         newArray.push(arr[counter])
+  //       }
+  //       else
+  //       {
+  //         newArray.push(arr[counter])
+  //       }
+  //     }
+  //     return newArray
+  //   })
     
-  }
+  // }
 
-  function newActiveData(id)
+  // function newActiveData(id)
+  // {
+  //   setActiveData((prev)=>
+  //   {
+  //     let returnObj;
+  //     for(let temp of weatherData)
+  //     {
+  //       if(id === temp.id)
+  //       {
+  //         returnObj = temp
+  //       }
+  //     }
+  //     return returnObj
+  //   })
+  // }
+
+  function changeActive(changeCount)
   {
+    console.log("here")
+    let position;
     setActiveData((prev)=>
     {
-      let returnObj;
-      for(let temp of weatherData)
+      position = prev.id
+      position += changeCount
+      console.log(position)
+      if(position < 0 || position == weatherData.length)
       {
-        if(id === temp.id)
-        {
-          returnObj = temp
-        }
+        return prev
       }
-      return returnObj
+      else{
+        console.log("weatherd",weatherData[position])
+        return weatherData[position]
+      }
     })
-  }
-
-  let mappedWeatherData = []
-  for(let counter = 1; counter < 6; counter++)
-  {
-    mappedWeatherData.push(<WeatherCard key={counter} {...weatherData[counter]}toggle={()=>changeCard(weatherData[counter].id)} changeCurrent={()=>newActiveData(weatherData[counter].id)}/>)
   }
 
 
   return (
     <div className='colFlex' style={backgroundStyling}>
       <CurrentWeather {...activeData} />
-      <div id='cardRow'>
-        {mappedWeatherData}
+      <div id="cardRow">
+        {activeData && <h1>{returnDay(activeData.datetime)}</h1>}
+      </div>
+      <div id='arrowRow'>
+        <div className='arrow' onClick={()=> changeActive(-1)}>
+          <i className="fas fa-arrow-circle-left"></i>
+        </div>
+        <div className='arrow' onClick={()=> changeActive(1)}>
+        <i className="fas fa-arrow-circle-right"></i>
+        </div>
       </div>
     </div>
   )

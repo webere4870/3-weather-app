@@ -26,12 +26,20 @@ body, html{
 {
     display: flex;
     justify-content: space-evenly;
-    align-items: center;
-    background: var(--mainGray);
-    width: 80%;
-    height: min-content;
+    align-items: flex-start;
+    background: #f2f2f2;
+    width: 500px;
+    height: 500px;
     padding: 40px 20px;
-    border-radius: 20px;
+    position: absolute;
+    bottom: -250px;
+    border-radius: 50%;
+    left: calc(50vw -150px);
+    color: gray;
+}
+
+#cardRow h1{
+    margin-top: 100px;
 }
 
 .weatherCard
@@ -45,6 +53,26 @@ body, html{
     justify-content: center;
     align-items: center;
     flex-direction: column;
+}
+
+.arrow  
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    bottom: 20px;
+}
+
+.arrow:hover{
+    cursor: pointer;
+}
+
+.arrow i{
+    color: white;
+    font-size: 80px;
 }
 
 .weatherCard:hover{
@@ -62,4 +90,18 @@ body, html{
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+#arrowRow{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    bottom: -20px;
+    width: 100vw;
+}
+
+#arrowRow > div{
+    margin: 0 200px;
 }
