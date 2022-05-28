@@ -9,6 +9,31 @@ function App()
   let [location, setLocation] = React.useState([])
   let [activeData, setActiveData] = React.useState({})
 
+  let backgroundStyling = 
+  {}
+
+  if(activeData.conditions)
+  {
+    if(activeData.conditions.includes("Sun") || activeData.conditions.includes("sun"))
+    {
+      backgroundStyling.background = "url('./images/sun.jpg')"
+    }
+    else if(activeData.conditions.includes("rain") || activeData.conditions.includes("Rain"))
+    {
+      backgroundStyling.background = "url('./images/rain.jpg')"
+    }
+    else if(activeData.conditions.includes("Cloud")|| activeData.conditions.includes("cloud"))
+    {
+      backgroundStyling.background = "url('./images/sun.jpg')"
+      backgroundStyling.backgroundRepeat = 'no-repeat'
+      backgroundStyling.backgroundSize = 'cover'
+      backgroundStyling.backgroundPosition = 'center'
+    }
+    else{
+      backgroundStyling.background = "url('./images/rain.jpg')"
+    }
+  }
+
   React.useEffect(()=>
   {
     fetch("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Findlay%2C%20OH?unitGroup=metric&key=HT984Q2C3RH6ZBESHCUGTV3N5&contentType=json")
@@ -39,7 +64,6 @@ function App()
 
   function changeCard(id)
   {
-    console.log(id)
     setWeatherData((arr)=>
     {
       let newArray = []
@@ -85,7 +109,7 @@ function App()
 
 
   return (
-    <div className='colFlex'>
+    <div className='colFlex' style={backgroundStyling}>
       <CurrentWeather {...activeData} />
       <div id='cardRow'>
         {mappedWeatherData}
