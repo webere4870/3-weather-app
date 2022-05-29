@@ -1,6 +1,7 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOM, { render } from 'react-dom'
 import CurrentWeather from './components/CurrentWeather'
+import renderTheme from './components/styles'
 
 function returnDay(dateTime)
 {
@@ -40,9 +41,9 @@ function App()
     fetch("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Findlay%2C%20OH?unitGroup=metric&key=HT984Q2C3RH6ZBESHCUGTV3N5&contentType=json")
     .then((data)=> data.json())
     //err
-    .catch((datar)=>
+    .then((datar)=>
     {
-      let data = {location: "findlay", days: [{datetime: '2022-05-28'},{datetime: '2022-05-29'}, {datetime: '2022-05-30'}]}
+      let data = {location: "findlay", days: [{datetime: '2022-05-28', conditions: 'sun'},{datetime: '2022-05-29', conditions: 'cloud'}, {datetime: '2022-05-30', conditions: 'rain'}, {datetime: '2022-05-31', conditions: 'snow'}, {datetime: '2022-06-01', conditions: 'ice'},]}
       console.log(data)
       let finalArray = []
       setWeatherData((prev)=>
@@ -124,7 +125,7 @@ function App()
 
 
   return (
-    <div className='colFlex' style={backgroundStyling}>
+    <div className='colFlex' style={activeData && renderTheme(activeData.conditions)}>
       <CurrentWeather {...activeData} />
       <div id="cardRow">
         {activeData && <h1>{returnDay(activeData.datetime)}</h1>}
