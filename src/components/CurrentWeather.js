@@ -7,6 +7,7 @@ function tempConversion(temp)
 
 function CurrentWeather(props)
 {
+    console.log(props,"props")
     let mapData
     if(props.hours)
     {
@@ -18,12 +19,13 @@ function CurrentWeather(props)
             
         })
     }
+    
     return(
-        <div id='iconFix'>
-            {props.getIcon()}
-            <ul>
-                {mapData}
-            </ul>
+        <div id='iconFix' className='columnFlex'>
+            {props.hourlyData ? <h1>Hi</h1>: <div>{props.getIcon()}
+            <h3>{props && props.description}</h3>
+            {props && <h1>{tempConversion(props.tempmin)} | {tempConversion(props.tempmax)}</h1>} </div>}
+            {props && <button onClick={props.toggleData}>See Hourly</button>}
         </div>
     )
 }

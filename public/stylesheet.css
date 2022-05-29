@@ -44,11 +44,22 @@ li{
     box-shadow: 0 0 30px gray;
 }
 
+h1{
+    font-size: 70px;
+    font-weight: lighter;
+}
+
+h3{
+    font-size: 40px;
+    font-weight: lighter;
+}
+
 #cardRow h1{
     margin-top: 100px;
     color: white;
     font-size: 60px;
 }
+
 
 .weatherCard
 {
@@ -121,4 +132,28 @@ li{
 #iconFix i{
     color: white;
     font-size: 100px;
+}
+
+
+.columnFlex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+button{
+    border: none;
+    padding: 10px 30px;
+    border-radius: 16px;
+    background: white;
+    color: black;
+    font-size: 25px;
+    margin: 20px;
+    box-shadow: 0 0 10px gray;
+}
+
+button:hover{
+    box-shadow: 0 0 30px gray;
+    cursor: pointer;
 }

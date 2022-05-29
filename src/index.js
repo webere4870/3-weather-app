@@ -32,6 +32,7 @@ function App()
  {
   if(weatherData)
   {
+    weatherData[0].hourlyOn = false
     setActiveData(weatherData[0])
   }
  },[weatherData])
@@ -41,9 +42,9 @@ function App()
     fetch("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Findlay%2C%20OH?unitGroup=metric&key=HT984Q2C3RH6ZBESHCUGTV3N5&contentType=json")
     .then((data)=> data.json())
     //err
-    .then((datar)=>
+    .then((data)=>
     {
-      let data = {location: "findlay", days: [{datetime: '2022-05-28', conditions: 'sun'},{datetime: '2022-05-29', conditions: 'cloud'}, {datetime: '2022-05-30', conditions: 'rain'}, {datetime: '2022-05-31', conditions: 'snow'}, {datetime: '2022-06-01', conditions: 'ice'},]}
+      // let data = {location: "findlay", days: [{datetime: '2022-05-28', conditions: 'sun'},{datetime: '2022-05-29', conditions: 'cloud'}, {datetime: '2022-05-30', conditions: 'rain'}, {datetime: '2022-05-31', conditions: 'snow'}, {datetime: '2022-06-01', conditions: 'ice'},]}
       console.log(data)
       let finalArray = []
       setWeatherData((prev)=>
@@ -118,15 +119,28 @@ function App()
       }
       else{
         console.log("weatherd",weatherData[position])
+        weatherData[position].hourlyOn = false
         return weatherData[position]
       }
+    })
+  }
+
+  function toggleHourly()
+  {
+    console.log("Here", "toggle")
+    setActiveData((prev)=>
+    {
+      let obj = {}
+      obj = {...prev}
+      obj.hourlyOn = !prev.hourlyOn
+      return obj
     })
   }
 
 
   return (
     <div className='colFlex' style={activeData && renderTheme(activeData.conditions)}>
-      <CurrentWeather {...activeData} getIcon={()=>renderIcon(activeData.conditions)} />
+      <CurrentWeather {...activeData} getIcon={()=>renderIcon(activeData.conditions)} toggleData={toggleHourly}/>
       <div id="cardRow">
         {activeData && <h1>{returnDay(activeData.datetime)}</h1>}
       </div>

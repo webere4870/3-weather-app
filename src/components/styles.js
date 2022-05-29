@@ -1,6 +1,6 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCloudSun, faCloudRain } from '@fortawesome/free-solid-svg-icons'
+import { faCloudSun, faCloudRain, faCloud, faCloudBolt, faCloudShowersHeavy } from '@fortawesome/free-solid-svg-icons'
 
 let cloudStyle = {
     background: "#007bff"
@@ -15,7 +15,7 @@ let sunStyle = {
 }
 
 let snowStyle = {
-    background: "#f8f9fa"
+    background: "#007bff"
 }
 
 let iceStyle = {
@@ -65,6 +65,7 @@ function renderTheme(condition)
 
 function renderIcon(condition)
 {
+    console.log(condition)
     if(condition)
     {
         if(condition.includes("sun") || condition.includes("Sun"))
@@ -77,22 +78,22 @@ function renderIcon(condition)
         }
         else if(condition.includes("cloud") || condition.includes("Cloud"))
         {
-            return (<i className="fas fa-clouds"></i>)
+            return (<FontAwesomeIcon icon={faCloud} fontSize={80}/>)
         }
         else if(condition.includes("storm") || condition.includes("stormy"))
         {
-            return (<i className="fas fa-thunderstorm"></i>)
+            return (<FontAwesomeIcon icon={faCloudBolt} fontSize={80}/>)
         }
         else if(condition.includes("ice") || condition.includes("Ice"))
         {
-            return (<i className="fas fa-cloud-hail-mixed"></i>)
+            return (<FontAwesomeIcon icon={faCloudShowersHeavy} fontSize={80}/>)
         }
         else if(condition.includes("snow") || condition.includes("Snow"))
         {
-            return (<i className="fas fa-cloud-snow"></i>)
+            return (<FontAwesomeIcon icon={faCloudRain} fontSize={80}/>)
         }
         else{
-            return (<i className="fas fa-clouds"></i>)
+            return (<FontAwesomeIcon icon={faCloud} fontSize={80}/>)
         }
     }
 }
