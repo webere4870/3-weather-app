@@ -7,6 +7,7 @@
     transition-timing-function: linear;
     transition-duration: .5s;
     font-family: 'Poiret One', cursive;
+    color: white;
 }
 
 :root
@@ -17,12 +18,15 @@
 
 body, html{
     overflow-x: hidden;
+    overflow-y: hidden;
 }
 
-#root
-{
-    
+li{
+    font-size: 30px;
 }
+
+
+
 
 #cardRow
 {
@@ -110,4 +114,11 @@ body, html{
 
 #arrowRow > div{
     margin: 0 200px;
+}
+
+
+
+#iconFix i{
+    color: white;
+    font-size: 100px;
 }

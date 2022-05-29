@@ -19,7 +19,8 @@ function CurrentWeather(props)
         })
     }
     return(
-        <div>
+        <div id='iconFix'>
+            {props.getIcon()}
             <ul>
                 {mapData}
             </ul>

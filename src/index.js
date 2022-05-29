@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM, { render } from 'react-dom'
 import CurrentWeather from './components/CurrentWeather'
-import renderTheme from './components/styles'
+import {renderTheme, renderIcon} from './components/styles'
 
 function returnDay(dateTime)
 {
@@ -126,7 +126,7 @@ function App()
 
   return (
     <div className='colFlex' style={activeData && renderTheme(activeData.conditions)}>
-      <CurrentWeather {...activeData} />
+      <CurrentWeather {...activeData} getIcon={()=>renderIcon(activeData.conditions)} />
       <div id="cardRow">
         {activeData && <h1>{returnDay(activeData.datetime)}</h1>}
       </div>
