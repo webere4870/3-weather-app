@@ -2,6 +2,7 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowCircleLeft, faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
 import timeConversion from './utils'
+import { renderIcon } from './styles'
 
 function tempConversion(temp)
 {
@@ -29,7 +30,7 @@ function HourlyTable(props)
         mapCount++
         return (<div className='tableRow' key={mapCount}>
         <h1>{timeConversion(temp.datetime)}</h1>
-        <div className="col2"><h1>{tempConversion(temp.temp)}</h1></div>
+        <div className="col2"><div className="subCol">{renderIcon(temp.conditions)}</div><h1>{tempConversion(temp.temp)}</h1></div>
         </div>)
         
     })

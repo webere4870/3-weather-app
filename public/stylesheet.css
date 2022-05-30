@@ -178,6 +178,7 @@ button:hover{
 
 .col2{
     margin-left: auto;
+    display: flex;
 }
 
 #wholeTable{
@@ -199,3 +200,6 @@ button:hover{
     align-items: center;
 }
 
+.subCol{
+    margin: 10px;
+}

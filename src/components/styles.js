@@ -31,7 +31,7 @@ function renderTheme(condition)
 {
     if(condition)
     {
-        if(condition.includes("sun") || condition.includes("Sun"))
+        if(condition.includes("sun") || condition.includes("Sun") || condition.includes("clear") || condition.includes("Clear"))
         {
             return sunStyle
         }
@@ -68,7 +68,7 @@ function renderIcon(condition)
     console.log(condition)
     if(condition)
     {
-        if(condition.includes("sun") || condition.includes("Sun"))
+        if(condition.includes("sun") || condition.includes("Sun") || condition.includes("clear") || condition.includes("Clear"))
         {
             return (<FontAwesomeIcon icon={faCloudSun} fontSize={80}/>)
         }
