@@ -164,11 +164,7 @@ button:hover{
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    width: 500px;
-    height: 300px;
-    overflow-y: scroll;
-    box-shadow: 0 0 10px gray;
-    border-radius: 16px;
+    width: 700px;
     padding: 20px;
 }
 
@@ -189,3 +185,17 @@ button:hover{
     justify-content: center;
     align-items: center;
 }
+.hoverable{
+    transition-duration: .2s;
+}
+.hoverable:hover{
+    transform: scale(120%);
+    cursor: pointer;
+}
+
+.rowFlex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
