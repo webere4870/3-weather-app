@@ -1,4 +1,6 @@
 import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowCircleLeft, faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
 
 function tempConversion(temp)
 {
@@ -13,13 +15,42 @@ function toStandardTime(militaryTime) {
 function HourlyTable(props)
 {
 
+    let counter = 0
+    for(let temp of props.hours)
+    {
+        temp.id = counter
+        counter++
+    }
+    let [visibleHours, setVisibleHours] = React.useState(props ? [props.hours[0],props.hours[1], props.hours[2], props.hours[3]] : null)
+
+    function changeVisible(deviate)
+    {
+        setVisibleHours((prev)=>
+        {
+            let position = prev[0].id
+            position += deviate 
+            if(position == -1 || position == 21)
+            {
+                return prev
+            }
+            else
+            {
+                let newArr = []
+                
+            }
+        })
+    }
+
     function getHourlyTable()
     {
+        let counter = 0
         let hourlyMap = props.hours.map((temp)=>
         {
+            counter++
             let time = toStandardTime(temp.datetime)
             return (
-                <div className="tableRow">
+                
+                <div key={counter} id={counter} className="tableRow">
                     <div className='col1'>
                         <h3>{time}</h3>
                     </div>
@@ -34,8 +65,17 @@ function HourlyTable(props)
     }
 
     return (
-        <div id='hourlyTable'>
-            {props && getHourlyTable()}
+        <div id='wholeTable'>
+
+            <div onClick={()=> changeVisible(-1)}>
+            <FontAwesomeIcon style={{margin: "0 20px"}} icon={faArrowCircleLeft} fontSize={40}/>
+            </div>
+            <div id='hourlyTable'>
+                {props && getHourlyTable()}
+            </div>
+            <div onClick={()=>changeVisible(1)}>
+            <FontAwesomeIcon style={{margin: "0 20px"}} icon={faArrowCircleRight} fontSize={40}/>
+            </div>
         </div>
     )
 }

@@ -184,3 +184,8 @@ button:hover{
     margin-left: auto;
 }
 
+#wholeTable{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

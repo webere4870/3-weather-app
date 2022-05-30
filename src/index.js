@@ -1,3 +1,4 @@
+import { counter } from '@fortawesome/fontawesome-svg-core'
 import React from 'react'
 import ReactDOM, { render } from 'react-dom'
 import CurrentWeather from './components/CurrentWeather'
@@ -22,6 +23,7 @@ function returnDay(dateTime)
 function App()
 {
   let [weatherData, setWeatherData] = React.useState()
+  let [activeHourly, setActiveHourly] = React.useState()
   let [location, setLocation] = React.useState([])
   let [activeData, setActiveData] = React.useState({})
 
@@ -47,6 +49,13 @@ function App()
       // let data = {location: "findlay", days: [{datetime: '2022-05-28', conditions: 'sun'},{datetime: '2022-05-29', conditions: 'cloud'}, {datetime: '2022-05-30', conditions: 'rain'}, {datetime: '2022-05-31', conditions: 'snow'}, {datetime: '2022-06-01', conditions: 'ice'},]}
       console.log(data)
       let finalArray = []
+      for(let i = 0; i < data.length; i++)
+      {
+        for(let j = 0; j < data.days[i].hours.length; j++)
+        {
+          data.days[i].hours[j].id = j
+        }
+      }
       setWeatherData((prev)=>
       {
         for(let counter = 0; counter < data.days.length; counter++)
