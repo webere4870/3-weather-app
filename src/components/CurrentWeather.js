@@ -1,4 +1,5 @@
 import React from 'react'
+import HourlyTable from './HourlyTable'
 
 function tempConversion(temp)
 {
@@ -19,10 +20,11 @@ function CurrentWeather(props)
             
         })
     }
+
     
     return(
         <div id='iconFix' className='columnFlex'>
-            {props.hourlyData ? <h1>Hi</h1>: <div>{props.getIcon()}
+            {props.hourlyOn == true? <HourlyTable {...props} />: <div className='columnFlex'>{props.getIcon()}
             <h3>{props && props.description}</h3>
             {props && <h1>{tempConversion(props.tempmin)} | {tempConversion(props.tempmax)}</h1>} </div>}
             {props && <button onClick={props.toggleData}>See Hourly</button>}

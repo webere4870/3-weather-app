@@ -157,3 +157,30 @@ button:hover{
     box-shadow: 0 0 30px gray;
     cursor: pointer;
 }
+
+#hourlyTable
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 500px;
+    height: 300px;
+    overflow-y: scroll;
+    box-shadow: 0 0 10px gray;
+    border-radius: 16px;
+    padding: 20px;
+}
+
+.tableRow{
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+
+.col2{
+    margin-left: auto;
+}
+
