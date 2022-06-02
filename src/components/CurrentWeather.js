@@ -8,7 +8,6 @@ function tempConversion(temp)
 
 function CurrentWeather(props)
 {
-    console.log(props,"props")
     let mapData
     if(props.hours)
     {

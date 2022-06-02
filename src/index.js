@@ -3,6 +3,7 @@ import React from 'react'
 import ReactDOM, { render } from 'react-dom'
 import CurrentWeather from './components/CurrentWeather'
 import {renderTheme, renderIcon} from './components/styles'
+import Form from './components/Form'
 
 function returnDay(dateTime)
 {
@@ -26,9 +27,9 @@ function App()
   let [activeHourly, setActiveHourly] = React.useState()
   let [location, setLocation] = React.useState([])
   let [activeData, setActiveData] = React.useState({})
+  let [city, setCity] = React.useState("Findlay")
+  let [state, setState] = React.useState("OH")
 
-  let backgroundStyling = 
-  {}
 
  React.useEffect(()=>
  {
@@ -37,17 +38,16 @@ function App()
     weatherData[0].hourlyOn = false
     setActiveData(weatherData[0])
   }
- },[weatherData])
+ },[weatherData, city, state])
 
   React.useEffect(()=>
   {
-    fetch("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Findlay%2C%20OH?unitGroup=metric&key=HT984Q2C3RH6ZBESHCUGTV3N5&contentType=json")
+    fetch("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/"+city+"%2C%20"+ state +"?unitGroup=metric&key=HT984Q2C3RH6ZBESHCUGTV3N5&contentType=json")
     .then((data)=> data.json())
     //err
     .then((data)=>
     {
       // let data = {location: "findlay", days: [{datetime: '2022-05-28', conditions: 'sun'},{datetime: '2022-05-29', conditions: 'cloud'}, {datetime: '2022-05-30', conditions: 'rain'}, {datetime: '2022-05-31', conditions: 'snow'}, {datetime: '2022-06-01', conditions: 'ice'},]}
-      console.log(data)
       let finalArray = []
       for(let i = 0; i < data.length; i++)
       {
@@ -63,71 +63,28 @@ function App()
           data.days[counter].id = counter
           finalArray.push(data.days[counter])
         }
-        console.log(finalArray)
         return finalArray
       })
-      // setActiveData((prev)=>
-      // {
-      //   let current = weatherData[0]
-      //   console.log("Current", current)
-      //   return current
-      // })
     })
-  }, [])
-  // function changeCard(id)
-  // {
-  //   setWeatherData((arr)=>
-  //   {
-  //     let newArray = []
-  //     for(let counter = 0; counter < arr.length; counter++)
-  //     {
-  //       if(arr[counter].id === id)
-  //       {
-          
-  //         arr[counter].front = !arr[counter].front
-  //         newArray.push(arr[counter])
-  //       }
-  //       else
-  //       {
-  //         newArray.push(arr[counter])
-  //       }
-  //     }
-  //     return newArray
-  //   })
-    
-  // }
+    .catch((err)=>
+    {
+      console.log("Location not found")
+    })
+  }, [city, state])
 
-  // function newActiveData(id)
-  // {
-  //   setActiveData((prev)=>
-  //   {
-  //     let returnObj;
-  //     for(let temp of weatherData)
-  //     {
-  //       if(id === temp.id)
-  //       {
-  //         returnObj = temp
-  //       }
-  //     }
-  //     return returnObj
-  //   })
-  // }
 
   function changeActive(changeCount)
   {
-    console.log("here")
     let position;
     setActiveData((prev)=>
     {
       position = prev.id
       position += changeCount
-      console.log(position)
       if(position < 0 || position == weatherData.length)
       {
         return prev
       }
       else{
-        console.log("weatherd",weatherData[position])
         weatherData[position].hourlyOn = false
         return weatherData[position]
       }
@@ -136,7 +93,6 @@ function App()
 
   function toggleHourly()
   {
-    console.log("Here", "toggle")
     setActiveData((prev)=>
     {
       let obj = {}
@@ -146,9 +102,16 @@ function App()
     })
   }
 
+  function changeInput(event)
+  {
+    event.target.name == "city" ? setCity(event.target.value) : setState(event.target.value)
+  }
+
+  console.log(city, state)
 
   return (
     <div className='colFlex' style={activeData && renderTheme(activeData.conditions)}>
+      <Form toggleInput={changeInput} city={city} state={state}/>
       <CurrentWeather {...activeData} getIcon={()=>renderIcon(activeData.conditions)} toggleData={toggleHourly}/>
       <div id="cardRow">
         {activeData && <h1>{returnDay(activeData.datetime)}</h1>}
