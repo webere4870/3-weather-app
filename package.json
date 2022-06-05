@@ -2,7 +2,7 @@
   "name": "3-weather-app",
   "version": "0.1.0",
   "private": false,
-  "homepage": "https://webere4870.github.io/3-weather-app/index.html",
+  "homepage": "https://webere4870.github.io/",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
