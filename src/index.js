@@ -4,6 +4,7 @@ import ReactDOM, { render } from 'react-dom'
 import CurrentWeather from './components/CurrentWeather'
 import {renderTheme, renderIcon} from './components/styles'
 import Form from './components/Form'
+import './stylesheet.css'
 
 function returnDay(dateTime)
 {
